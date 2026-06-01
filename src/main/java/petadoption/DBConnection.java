@@ -5,14 +5,12 @@ import java.sql.DriverManager;
 public class DBConnection {
 
     public static void connect() {
-
         try {
             String url = "jdbc:mysql://localhost:3306/sys";
             String user = "root";
             String password = "1234";
 
-            Connection conn =
-                DriverManager.getConnection(url, user, password);
+            Connection conn = DriverManager.getConnection(url, user, password);
 
             System.out.println("Connected successfully!");
 
