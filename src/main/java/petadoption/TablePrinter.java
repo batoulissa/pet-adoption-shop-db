@@ -31,6 +31,10 @@ public class TablePrinter {
             }
             rows.add(row);
         }
+        if (rows.isEmpty()) {
+            System.out.println("No records found.");
+            return;
+        }
         printBorder(widths);
 
         //header row
