@@ -6,10 +6,11 @@ public class DBConnection {
 
     public static Connection connect() {
         try {
+            String url = "jdbc:mysql://localhost:3306/sys";
+            String user = "root";
+            String password = "1234";
 
-            Connection conn = DriverManager.getConnection(
-                "jdbc:mysql://localhost:3306/databasename", "root", "1234");
-                //replace databasename
+            Connection conn = DriverManager.getConnection(url, user, password);
 
             System.out.println("Connected successfully!");
 
