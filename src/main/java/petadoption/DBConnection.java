@@ -4,20 +4,20 @@ import java.sql.DriverManager;
 
 public class DBConnection {
 
-    public static void connect() {
+    public static Connection connect() {
         try {
-            String url = "jdbc:mysql://localhost:3306/sys";
-            String user = "root";
-            String password = "1234";
 
-            Connection conn = DriverManager.getConnection(url, user, password);
+            Connection conn = DriverManager.getConnection(
+                "jdbc:mysql://localhost:3306/databasename", "root", "1234");
+                //replace databasename
 
             System.out.println("Connected successfully!");
 
-            conn.close();
+            return conn;
 
         } catch (Exception e) {
             e.printStackTrace();
         }
+        return null;
     }
 }

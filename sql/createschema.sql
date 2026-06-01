@@ -4,8 +4,7 @@
 -- REQ13: fee_schedule + unit_price_at_sale snapshot in adoption_basket_items
 -- REQ14: adopter_history tracks demographic changes
 -- ============================================================
-CREATE DATABASE cat_adoption_center;
-USE cat_adoption_center;
+
 -- 1. cat
 CREATE TABLE cat (
     cat_id              INT           PRIMARY KEY AUTO_INCREMENT,
