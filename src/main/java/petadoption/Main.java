@@ -1,9 +1,14 @@
 package petadoption;
 
-
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.Scanner;
+
+import petadoption.AdopterMenu;
+import petadoption.AdoptionMenu;
+import petadoption.CatMenu;
+import petadoption.DBConnection;
+import petadoption.FeeMenu;
 
 public class Main {
 
@@ -26,8 +31,10 @@ public class Main {
                 System.out.println("===== Cat Adoption Center System =====");
                 System.out.println("1. Cat Menu");
                 System.out.println("2. Fee Menu");
-                System.out.println("3. Worker Menu");
-                System.out.println("4. Report Menu");
+                System.out.println("3. Adopter Menu");
+                System.out.println("4. Adoption Menu");
+                System.out.println("5. Worker Menu");
+                System.out.println("6. Report Menu");
                 System.out.println("0. Exit");
 
                 int choice = readInt(scanner, "Choose menu: ");
@@ -35,8 +42,10 @@ public class Main {
                 switch (choice) {
                     case 1 -> showCatMenu(scanner, catMenu);
                     case 2 -> showFeeMenu(scanner, feeMenu);
-                    case 3 -> workerMenu.showMenu();
-                    case 4 -> reportMenu.showMenu();
+                    case 3 -> AdopterMenu.menu();
+                    case 4 -> AdoptionMenu.menu();
+                    case 5 -> workerMenu.showMenu();
+                    case 6 -> reportMenu.showMenu();
                     case 0 -> {
                         System.out.println("Program ended.");
                         return;

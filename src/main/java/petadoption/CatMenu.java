@@ -81,29 +81,7 @@ public class CatMenu {
             pstmt.setString(1, catType);
 
             ResultSet rs = pstmt.executeQuery();
-
-            System.out.printf("%-5s %-15s %-22s %-8s %-15s %-8s %-12s %-10s %-10s%n",
-                    "ID", "Name", "Breed", "Age", "Type", "Gender", "Color", "Fee", "Medical");
-            System.out.println("------------------------------------------------------------------------------------------------");
-
-            boolean found = false;
-            while (rs.next()) {
-                found = true;
-                System.out.printf("%-5d %-15s %-22s %-8d %-15s %-8s %-12s %-10.2f %-10d%n",
-                        rs.getInt("cat_id"),
-                        rs.getString("cat_name"),
-                        rs.getString("breed"),
-                        rs.getInt("age_months"),
-                        rs.getString("cat_type"),
-                        rs.getString("gender"),
-                        rs.getString("color"),
-                        rs.getDouble("current_adoption_fee"),
-                        rs.getInt("medical_visits"));
-            }
-
-            if (!found) {
-                System.out.println("No available cats found for this type.");
-            }
+            TablePrinter.print(rs);
 
             rs.close();
             pstmt.close();

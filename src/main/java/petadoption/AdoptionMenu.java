@@ -4,7 +4,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AdoptionDAO {
+public class AdoptionMenu {
 
     // =========================================================
     // MAIN MENU
