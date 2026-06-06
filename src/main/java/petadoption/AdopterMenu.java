@@ -289,39 +289,46 @@ public class AdopterMenu {
     // =========================================================
     // 6. DELETE ADOPTER
     // =========================================================
-    private static void deleteAdopter() {
-        int adopterId = InputHelper.getInt("Enter adopter ID to delete: ");
+   private static void deleteAdopter() {
+    int adopterId = InputHelper.getInt("Enter adopter ID to delete: ");
 
-        // Check if adopter has transactions
-        String checkSql = "SELECT COUNT(*) FROM adoption_transaction WHERE adopter_id = ?";
-        try (Connection conn = DBConnection.connect();
-             PreparedStatement check = conn.prepareStatement(checkSql)) {
+    // Check if adopter has transactions
+    String checkSql = "SELECT COUNT(*) FROM adoption_transaction WHERE adopter_id = ?";
+    try (Connection conn = DBConnection.connect();
+         PreparedStatement check = conn.prepareStatement(checkSql)) {
 
-            check.setInt(1, adopterId);
-            ResultSet rs = check.executeQuery();
-            rs.next();
-            if (rs.getInt(1) > 0) {
-                System.out.println("Cannot delete: adopter has existing adoption transactions.");
-                return;
-            }
-
-            if (!InputHelper.getBool("Are you sure you want to delete adopter " + adopterId + "?")) {
-                System.out.println("Cancelled.");
-                return;
-            }
-
-            String sql = "DELETE FROM adopter WHERE adopter_id = ?";
-            try (PreparedStatement ps = conn.prepareStatement(sql)) {
-                ps.setInt(1, adopterId);
-                int rows = ps.executeUpdate();
-                if (rows > 0) System.out.println("Adopter deleted.");
-                else          System.out.println("Adopter not found.");
-            }
-
-        } catch (SQLException e) {
-            System.out.println("Error deleting adopter: " + e.getMessage());
+        check.setInt(1, adopterId);
+        ResultSet rs = check.executeQuery();
+        rs.next();
+        if (rs.getInt(1) > 0) {
+            System.out.println("Cannot delete: adopter has existing adoption transactions.");
+            return;
         }
+
+        if (!InputHelper.getBool("Are you sure you want to delete adopter " + adopterId + "?")) {
+            System.out.println("Cancelled.");
+            return;
+        }
+
+        // Delete history first, then adopter
+        String deleteHistorySql = "DELETE FROM adopter_history WHERE adopter_id = ?";
+        try (PreparedStatement ps = conn.prepareStatement(deleteHistorySql)) {
+            ps.setInt(1, adopterId);
+            ps.executeUpdate();
+        }
+
+        String sql = "DELETE FROM adopter WHERE adopter_id = ?";
+        try (PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setInt(1, adopterId);
+            int rows = ps.executeUpdate();
+            if (rows > 0) System.out.println("Adopter deleted.");
+            else          System.out.println("Adopter not found.");
+        }
+
+    } catch (SQLException e) {
+        System.out.println("Error deleting adopter: " + e.getMessage());
     }
+}
 
     // =========================================================
     // 7. [REQ14] VIEW ADOPTER DEMOGRAPHIC HISTORY
