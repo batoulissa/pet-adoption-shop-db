@@ -43,11 +43,11 @@ public class AdopterMenu {
     // =========================================================
     private static void viewAllAdopters() {
         String sql = """
-                SELECT adopter_id, first_name, last_name, email, phone,
-                       city, birth_year, age, created_at
-                FROM adopter
-                ORDER BY last_name, first_name
-                """;
+            SELECT adopter_id, first_name, last_name, email, phone,
+                   city, birth_year, age, created_at
+            FROM adopter
+            ORDER BY adopter_id ASC
+            """;
         try (Connection conn = DBConnection.connect();
              PreparedStatement ps = conn.prepareStatement(sql);
              ResultSet rs = ps.executeQuery()) {
