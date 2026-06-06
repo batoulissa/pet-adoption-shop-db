@@ -2,7 +2,7 @@ package petadoption;
 
 import java.sql.*;
 
-public class CustomerDAO {
+public class AdopterMenu {
 
     // =========================================================
     // MAIN MENU
