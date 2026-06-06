@@ -16,9 +16,9 @@ public class AdopterMenu {
             System.out.println(" 4. Add new adopter");
             System.out.println(" 5. Update adopter info (records demographic snapshot)");
             System.out.println(" 6. Delete adopter");
-            System.out.println(" 7. [REQ14] View adopter demographic history");
-            System.out.println(" 8. [REQ14] Compare sales BEFORE vs AFTER demographic change");
-            System.out.println(" 9. [REQ14] Sales breakdown by city across all adopters");
+            System.out.println(" 7. View adopter demographic history");
+            System.out.println(" 8. Compare sales BEFORE vs AFTER demographic change");
+            System.out.println(" 9. Sales breakdown by city across all adopters");
             System.out.println(" 0. Back to main menu");
             System.out.println("====================================");
 
