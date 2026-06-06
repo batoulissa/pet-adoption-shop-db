@@ -23,8 +23,6 @@ public class Main {
 
             CatMenu catMenu = new CatMenu(conn, scanner);
             FeeMenu feeMenu = new FeeMenu(conn, scanner);
-            AdopterMenu adopterMenu = new AdopterMenu(conn, scanner);
-            AdoptionMenu adoptionMenu = new AdoptionMenu(conn, scanner);
             WorkerMenu workerMenu = new WorkerMenu(conn, scanner);
             ReportMenu reportMenu = new ReportMenu(conn, scanner);
 
@@ -44,8 +42,8 @@ public class Main {
                 switch (choice) {
                     case 1 -> showCatMenu(scanner, catMenu);
                     case 2 -> showFeeMenu(scanner, feeMenu);
-                    case 3 -> adopterMenu.showMenu();
-                    case 4 -> adoptionMenu.showMenu();
+                    case 3 -> AdopterMenu.menu();
+                    case 4 -> AdoptionMenu.menu();
                     case 5 -> workerMenu.showMenu();
                     case 6 -> reportMenu.showMenu();
                     case 0 -> {
