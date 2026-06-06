@@ -9,7 +9,7 @@ public class AdopterMenu {
     // =========================================================
     public static void menu() {
         while (true) {
-            System.out.println("\n========== CUSTOMER MENU ==========");
+            System.out.println("\n========== ADOPTER MENU ==========");
             System.out.println(" 1. View all adopters");
             System.out.println(" 2. Search adopter by name");
             System.out.println(" 3. View adopter details (with adoption history)");
