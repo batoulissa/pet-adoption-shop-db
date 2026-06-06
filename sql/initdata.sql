@@ -47,7 +47,18 @@ INSERT INTO cat (cat_name, breed, age_months, cat_type, gender, color, descripti
 -- id=21
 ('Baram',     'Norwegian Forest',   84, 'senior',        'male',   'black',         'Liver values critical on last bloodwork. Owner could not afford surgery.','euthanized',  '2025-06-18'),
 -- id=22
-('Pudding',   'British Shorthair',  48, 'adult',         'female', 'cream',         'Hit by a car near shelter. Brought in by a passerby. Injuries severe.', 'euthanized',   '2025-10-22');
+('Pudding',   'British Shorthair',  48, 'adult',         'female', 'cream',         'Hit by a car near shelter. Brought in by a passerby. Injuries severe.', 'euthanized',   '2025-10-22'),
+-- id=23 to 32 (available cats)
+('Puss in Boots', 'Domestic Shorthair', 24, 'adult',   'male',   'orange',        'Thinks he is the main character. Very dramatic.',                       'available',    '2026-03-15'),
+('Waffle',        'Munchkin',            8, 'kitten',  'female', 'cream',         'Tiny and round. Wobbles when she walks.',                               'available',    '2026-03-20'),
+('Dorito',        'Bengal',             14, 'kitten',  'male',   'spotted orange','Crunchy personality. Loud at 3am for no reason.',                       'available',    '2026-03-22'),
+('Mr Whiskers',   'Persian',            60, 'senior',  'male',   'white',         'Very distinguished. Looks disappointed in everyone.',                   'available',    '2026-03-25'),
+('Burrito',       'Ragdoll',            18, 'adult',   'male',   'brown tabby',   'Wraps himself in blankets. Does not move for hours.',                   'available',    '2026-04-01'),
+('Chairman Meow', 'Russian Blue',       36, 'adult',   'male',   'gray',          'Commands the room. Other cats listen to him somehow.',                  'available',    '2026-04-03'),
+('Cheeto',        'Domestic Longhair',   5, 'kitten',  'male',   'orange',        'Leaves orange fur on everything. Worth it.',                            'available',    '2026-04-05'),
+('Bagel',         'Scottish Fold',      10, 'kitten',  'female', 'white/gray',    'Sits like a loaf. Folded ears, folded personality.',                    'available',    '2026-04-08'),
+('Nacho',         'Maine Coon',         48, 'adult',   'male',   'brown tabby',   'Big guy. Gentle though. Scared of cucumbers.',                          'available',    '2026-04-10'),
+('Thundercat',    'Norwegian Forest',    7, 'kitten',  'male',   'black',         'Name is bigger than he is. Still figuring out gravity.',                'available',    '2026-04-12');
 
 
 -- 2. adopter (12 rows)
