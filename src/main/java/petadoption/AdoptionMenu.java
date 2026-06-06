@@ -49,21 +49,36 @@ public class AdoptionMenu {
         String sql;
         String param = null;
 
+        String base = """
+                SELECT cat_id,
+                       cat_name AS name,
+                       breed,
+                       age_months AS age,
+                       cat_type AS type,
+                       gender,
+                       color,
+                       description AS descript,
+                       intake_date AS intake,
+                       current_adoption_fee AS fee,
+                       medical_visits AS visits
+                FROM v_available_cats
+                """;
+
         switch (filter) {
             case 2 -> {
                 param = InputHelper.getString("Enter type (kitten/adult/senior/special_needs): ");
-                sql = "SELECT * FROM v_available_cats WHERE cat_type = ? ORDER BY cat_name";
+                sql = base + "WHERE cat_type = ? ORDER BY cat_id";
             }
             case 3 -> {
                 param = InputHelper.getString("Enter gender (male/female): ");
-                sql = "SELECT * FROM v_available_cats WHERE gender = ? ORDER BY cat_name";
+                sql = base + "WHERE gender = ? ORDER BY cat_id";
             }
             case 4 -> {
                 param = InputHelper.getString("Enter breed: ");
-                sql = "SELECT * FROM v_available_cats WHERE breed LIKE ? ORDER BY cat_name";
+                sql = base + "WHERE breed LIKE ? ORDER BY cat_id";
                 param = "%" + param + "%";
             }
-            default -> sql = "SELECT * FROM v_available_cats ORDER BY cat_name";
+            default -> sql = base + "ORDER BY cat_id";
         }
 
         try (Connection conn = DBConnection.connect();
@@ -80,13 +95,6 @@ public class AdoptionMenu {
 
     // =========================================================
     // 2. CREATE NEW ADOPTION TRANSACTION
-    //    Flow:
-    //      a) Enter adopter ID → validate exists
-    //      b) Enter shelter ID → validate exists
-    //      c) Add cats to basket (loop) → validate available
-    //      d) Show basket summary with fees (REQ13 snapshot)
-    //      e) Confirm → insert transaction + basket items + total fee
-    //      f) Mark cats as 'adopted' + link adopter_history (REQ14)
     // =========================================================
     private static void createAdoptionTransaction() {
         System.out.println("\n--- New Adoption Transaction ---");
@@ -107,7 +115,7 @@ public class AdoptionMenu {
         }
 
         // c) Build basket
-        List<int[]> basket = new ArrayList<>(); // [cat_id, fee_id, unit_price*100]
+        List<int[]> basket = new ArrayList<>();
         List<String> catNames = new ArrayList<>();
 
         while (true) {
@@ -137,14 +145,12 @@ public class AdoptionMenu {
             // Add cat
             int catId = InputHelper.getInt("Enter cat ID to adopt: ");
 
-            // Check if already in basket
             boolean duplicate = basket.stream().anyMatch(b -> b[0] == catId);
             if (duplicate) {
                 System.out.println("That cat is already in the basket.");
                 continue;
             }
 
-            // Fetch cat info + current fee (REQ13: snapshot the price now)
             String catSql = """
                     SELECT c.cat_id, c.cat_name, c.cat_type, c.status,
                            f.fee_id, f.unit_price
@@ -170,10 +176,10 @@ public class AdoptionMenu {
                     continue;
                 }
 
-                String catName  = rs.getString("cat_name");
-                String catType  = rs.getString("cat_type");
-                int    feeId    = rs.getInt("fee_id");
-                double price    = rs.getDouble("unit_price");
+                String catName = rs.getString("cat_name");
+                String catType = rs.getString("cat_type");
+                int    feeId   = rs.getInt("fee_id");
+                double price   = rs.getDouble("unit_price");
 
                 basket.add(new int[]{catId, feeId, (int)(price * 100)});
                 catNames.add(catName + " (" + catType + ", $" + String.format("%.2f", price) + ")");
@@ -205,10 +211,8 @@ public class AdoptionMenu {
             conn.setAutoCommit(false);
 
             try {
-                // Resolve adopter_history_id: get the most recent snapshot for this adopter (REQ14)
                 int historyId = getLatestHistoryId(conn, adopterId);
 
-                // Insert adoption_transaction
                 String txnSql = """
                         INSERT INTO adoption_transaction
                             (transaction_timestamp, shelter_id, adopter_id, adopter_history_id)
@@ -227,7 +231,6 @@ public class AdoptionMenu {
                     transactionId = keys.getInt(1);
                 }
 
-                // Insert basket items (REQ13: unit_price_at_sale snapshot)
                 String itemSql = """
                         INSERT INTO adoption_basket_items
                             (transaction_id, cat_id, fee_id, quantity, unit_price_at_sale)
@@ -236,15 +239,14 @@ public class AdoptionMenu {
                 try (PreparedStatement ps = conn.prepareStatement(itemSql)) {
                     for (int[] item : basket) {
                         ps.setInt(1, transactionId);
-                        ps.setInt(2, item[0]);        // cat_id
-                        ps.setInt(3, item[1]);        // fee_id
-                        ps.setDouble(4, item[2] / 100.0); // unit_price_at_sale
+                        ps.setInt(2, item[0]);
+                        ps.setInt(3, item[1]);
+                        ps.setDouble(4, item[2] / 100.0);
                         ps.addBatch();
                     }
                     ps.executeBatch();
                 }
 
-                // Insert total_adoption_fees
                 String feeSql = """
                         INSERT INTO total_adoption_fees (transaction_id, total_amount)
                         VALUES (?, ?)
@@ -255,7 +257,6 @@ public class AdoptionMenu {
                     ps.executeUpdate();
                 }
 
-                // Mark cats as 'adopted'
                 String updateCatSql = "UPDATE cat SET status = 'adopted' WHERE cat_id = ?";
                 try (PreparedStatement ps = conn.prepareStatement(updateCatSql)) {
                     for (int[] item : basket) {
@@ -287,7 +288,6 @@ public class AdoptionMenu {
     private static void viewTransactionDetails() {
         int txnId = InputHelper.getInt("Enter transaction ID: ");
 
-        // Transaction header
         String headerSql = """
                 SELECT
                     at2.transaction_id,
@@ -306,7 +306,6 @@ public class AdoptionMenu {
                 WHERE at2.transaction_id = ?
                 """;
 
-        // Basket items
         String itemsSql = """
                 SELECT
                     c.cat_id,
@@ -492,8 +491,6 @@ public class AdoptionMenu {
         }
     }
 
-    // REQ14: Get the most recent adopter_history ID for this adopter
-    // (used to link the transaction to the correct demographic snapshot)
     private static int getLatestHistoryId(Connection conn, int adopterId) throws SQLException {
         String sql = """
                 SELECT history_id FROM adopter_history
@@ -506,6 +503,6 @@ public class AdoptionMenu {
             ResultSet rs = ps.executeQuery();
             if (rs.next()) return rs.getInt("history_id");
         }
-        return -1; // no history found
+        return -1;
     }
 }

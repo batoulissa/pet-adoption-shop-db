@@ -1,5 +1,4 @@
 package petadoption;
-
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
@@ -7,6 +6,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class TablePrinter {
+    private static final int MAX_COL_WIDTH = 30;
+
     public static void print(ResultSet rs) throws SQLException {
         ResultSetMetaData meta=rs.getMetaData();
         int columnCount=meta.getColumnCount();
@@ -26,6 +27,10 @@ public class TablePrinter {
                 if (value==null) {
                     value="NULL";
                 }
+                // truncate long values
+                if (value.length() > MAX_COL_WIDTH) {
+                    value = value.substring(0, MAX_COL_WIDTH - 3) + "...";
+                }
                 row[i-1]=value;
                 widths[i-1]=Math.max(widths[i-1],value.length());
             }
@@ -41,7 +46,7 @@ public class TablePrinter {
         System.out.print("|");
         for (int i = 1; i <= columnCount; i++) {
             String header = meta.getColumnLabel(i);
-            System.out.printf(" %-"+widths[i-1]+"s |", header);
+            System.out.printf("  %-"+widths[i-1]+"s  |", header);
         }
         System.out.println();
         printBorder(widths);
@@ -50,7 +55,7 @@ public class TablePrinter {
         for (String[] row : rows) {
             System.out.print("|");
             for (int i = 0; i < columnCount; i++) {
-                System.out.printf(" %-"+widths[i]+"s |", row[i]);
+                System.out.printf("  %-"+widths[i]+"s  |", row[i]);
             }
             System.out.println();
         }
@@ -61,7 +66,8 @@ public class TablePrinter {
     private static void printBorder(int[] widths) {
         System.out.print("+");
         for (int width : widths) {
-            for (int i = 0; i < width + 2; i++) {
+            // +4 because we now have 2 spaces on each side
+            for (int i = 0; i < width + 4; i++) {
                 System.out.print("-");
             }
             System.out.print("+");
