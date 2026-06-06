@@ -4,12 +4,6 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.Scanner;
 
-import petadoption.AdopterMenu;
-import petadoption.AdoptionMenu;
-import petadoption.CatMenu;
-import petadoption.DBConnection;
-import petadoption.FeeMenu;
-
 public class Main {
 
     public static void main(String[] args) {
