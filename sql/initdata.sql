@@ -1,67 +1,76 @@
 -- Cat Adoption Center - initdata.sql
--- Initial data for all 13 tables
+-- Updated to match current createschema.sql (no basket_id, uses transaction_id)
 
 
--- 1. cat (22 rows)
+-- 1. cat (32 rows)
 INSERT INTO cat (cat_name, breed, age_months, cat_type, gender, color, description, status, intake_date) VALUES
 -- id=1
-('Gomungi',   'Scottish Fold',      8,  'kitten',        'female', 'white',         'Gets scared easily but warms up fast. Likes hiding under blankets.',   'available',    '2026-01-10'),
+('Gomungi',       'Scottish Fold',       8,  'kitten',        'female', 'white',         'Gets scared easily but warms up fast. Likes hiding under blankets.',    'available',    '2026-01-10'),
 -- id=2
-('Dubu',      'British Shorthair',  24, 'adult',         'male',   'gray',          'Big and chill. Sits in one spot all day and judges everyone.',          'available',    '2026-01-15'),
+('Dubu',          'British Shorthair',   24, 'adult',         'male',   'gray',          'Big and chill. Sits in one spot all day and judges everyone.',           'available',    '2026-01-15'),
 -- id=3
-('Nabi',      'American Shorthair', 36, 'adult',         'male',   'orange',        'Got into everything when he first arrived. Calmed down after neuter.',  'adopted',      '2025-11-20'),
+('Nabi',          'American Shorthair',  36, 'adult',         'male',   'orange',        'Got into everything when he first arrived. Calmed down after neuter.',   'adopted',      '2025-11-20'),
 -- id=4
-('Harang',    'Siamese',            12, 'kitten',        'female', 'cream/brown',   'Cries if you leave the room. Very attached.',                           'available',    '2026-02-01'),
+('Harang',        'Siamese',             12, 'kitten',        'female', 'cream/brown',   'Cries if you leave the room. Very attached.',                            'available',    '2026-02-01'),
 -- id=5
-('Kkomi',     'Maine Coon',         60, 'senior',        'male',   'black',         'Old but still acts like a kitten sometimes. Eats a lot.',               'available',    '2025-12-05'),
+('Kkomi',         'Maine Coon',          60, 'senior',        'male',   'black',         'Old but still acts like a kitten sometimes. Eats a lot.',                'available',    '2025-12-05'),
 -- id=6
-('Soltting',  'Persian',            18, 'adult',         'female', 'cream',         'Hates baths. Gets matted fur easily. Needs regular grooming.',          'foster',       '2026-01-22'),
+('Soltting',      'Persian',             18, 'adult',         'female', 'cream',         'Hates baths. Gets matted fur easily. Needs regular grooming.',           'foster',       '2026-01-22'),
 -- id=7
-('Tantan',    'Domestic Shorthair',  4, 'kitten',        'male',   'black/white',   'Bites a lot but its playful not mean. Very fast.',                      'available',    '2026-03-01'),
+('Tantan',        'Domestic Shorthair',   4, 'kitten',        'male',   'black/white',   'Bites a lot but its playful not mean. Very fast.',                       'available',    '2026-03-01'),
 -- id=8
-('Boong',     'Ragdoll',            30, 'adult',         'female', 'brown tabby',   'Falls asleep on you if you stay still long enough.',                    'available',    '2026-02-14'),
+('Boong',         'Ragdoll',             30, 'adult',         'female', 'brown tabby',   'Falls asleep on you if you stay still long enough.',                     'available',    '2026-02-14'),
 -- id=9
-('Gureum',    'Norwegian Forest',   48, 'adult',         'male',   'gray/white',    'Upper respiratory infection on intake. On medication. Recovering ok.',  'medical_hold', '2025-10-30'),
+('Gureum',        'Norwegian Forest',    48, 'adult',         'male',   'gray/white',    'Upper respiratory infection on intake. On medication. Recovering ok.',   'medical_hold', '2025-10-30'),
 -- id=10
-('Tteok',     'Munchkin',           15, 'kitten',        'male',   'orange tabby',  'Runs into walls sometimes. Vet says hes fine, just clumsy.',            'available',    '2026-02-20'),
+('Tteok',         'Munchkin',            15, 'kitten',        'male',   'orange tabby',  'Runs into walls sometimes. Vet says hes fine, just clumsy.',             'available',    '2026-02-20'),
 -- id=11
-('Somi',      'Turkish Angora',     22, 'adult',         'female', 'white',         'Used to be an outdoor cat. Still wants to look out the window all day.','adopted',      '2025-09-15'),
+('Somi',          'Turkish Angora',      22, 'adult',         'female', 'white',         'Used to be an outdoor cat. Still wants to look out the window all day.', 'adopted',      '2025-09-15'),
 -- id=12
-('Jjang',     'Russian Blue',       84, 'senior',        'male',   'blue-gray',     'Took 3 weeks before he stopped hiding. Now follows staff around.',      'available',    '2026-01-28'),
+('Jjang',         'Russian Blue',        84, 'senior',        'male',   'blue-gray',     'Took 3 weeks before he stopped hiding. Now follows staff around.',       'available',    '2026-01-28'),
 -- id=13
-('Hobak',     'Domestic Longhair',   6, 'kitten',        'female', 'orange',        'Sneezes constantly. Vet cleared her, probably just dust allergy.',       'available',    '2026-03-10'),
+('Hobak',         'Domestic Longhair',    6, 'kitten',        'female', 'orange',        'Sneezes constantly. Vet cleared her, probably just dust allergy.',        'available',    '2026-03-10'),
 -- id=14
-('Jommi',     'Tuxedo',             36, 'special_needs', 'male',   'black/white',   'Missing left eye from before intake. Gets around fine, very affectionate.','euthanized', '2025-08-01'),
+('Jommi',         'Tuxedo',              36, 'special_needs', 'male',   'black/white',   'Missing left eye from before intake. Gets around fine, very affectionate.','euthanized', '2025-08-01'),
 -- id=15
-('Chamchi',   'Bengal',             20, 'adult',         'female', 'spotted brown', 'Jumps on top of every cabinet. Needs a home without small kids.',        'available',    '2026-02-25'),
+('Chamchi',       'Bengal',              20, 'adult',         'female', 'spotted brown', 'Jumps on top of every cabinet. Needs a home without small kids.',         'available',    '2026-02-25'),
 -- id=16
-('Nori',      'Domestic Shorthair', 96, 'senior',        'male',   'gray',          'Found near Mapo station. Stage 4 kidney failure on arrival.',            'euthanized',   '2024-06-01'),
+('Nori',          'Domestic Shorthair',  96, 'senior',        'male',   'gray',          'Found near Mapo station. Stage 4 kidney failure on arrival.',             'euthanized',   '2024-06-01'),
 -- id=17
-('Bori',      'Persian',            48, 'special_needs', 'female', 'white',         'Breathing problems since intake. Did not improve with treatment.',       'euthanized',   '2024-09-15'),
+('Bori',          'Persian',             48, 'special_needs', 'female', 'white',         'Breathing problems since intake. Did not improve with treatment.',        'euthanized',   '2024-09-15'),
 -- id=18
-('Mustang',   'Maine Coon',         72, 'senior',        'male',   'brown tabby',   'Surrendered by owner. Lymphoma diagnosis at intake exam.',              'euthanized',   '2024-11-20'),
+('Mustang',       'Maine Coon',          72, 'senior',        'male',   'brown tabby',   'Surrendered by owner. Lymphoma diagnosis at intake exam.',               'euthanized',   '2024-11-20'),
 -- id=19
-('Garang',    'Domestic Longhair',  60, 'senior',        'female', 'gray/white',    'FIV positive. Secondary infections did not respond to antibiotics.',     'euthanized',   '2025-02-10'),
+('Garang',        'Domestic Longhair',   60, 'senior',        'female', 'gray/white',    'FIV positive. Secondary infections did not respond to antibiotics.',      'euthanized',   '2025-02-10'),
 -- id=20
-('Dotori',    'Siamese',            36, 'special_needs', 'female', 'cream',         'Neurological symptoms from birth. Deteriorated over 2 months in care.', 'euthanized',   '2025-04-05'),
+('Dotori',        'Siamese',             36, 'special_needs', 'female', 'cream',         'Neurological symptoms from birth. Deteriorated over 2 months in care.',  'euthanized',   '2025-04-05'),
 -- id=21
-('Baram',     'Norwegian Forest',   84, 'senior',        'male',   'black',         'Liver values critical on last bloodwork. Owner could not afford surgery.','euthanized',  '2025-06-18'),
+('Baram',         'Norwegian Forest',    84, 'senior',        'male',   'black',         'Liver values critical on last bloodwork. Owner could not afford surgery.','euthanized',   '2025-06-18'),
 -- id=22
-('Pudding',   'British Shorthair',  48, 'adult',         'female', 'cream',         'Hit by a car near shelter. Brought in by a passerby. Injuries severe.', 'euthanized',   '2025-10-22'),
--- id=23 to 32 (available cats)
-('Puss in Boots', 'Domestic Shorthair', 24, 'adult',   'male',   'orange',        'Thinks he is the main character. Very dramatic.',                       'available',    '2026-03-15'),
-('Waffle',        'Munchkin',            8, 'kitten',  'female', 'cream',         'Tiny and round. Wobbles when she walks.',                               'available',    '2026-03-20'),
-('Dorito',        'Bengal',             14, 'kitten',  'male',   'spotted orange','Crunchy personality. Loud at 3am for no reason.',                       'available',    '2026-03-22'),
-('Mr Whiskers',   'Persian',            60, 'senior',  'male',   'white',         'Very distinguished. Looks disappointed in everyone.',                   'available',    '2026-03-25'),
-('Burrito',       'Ragdoll',            18, 'adult',   'male',   'brown tabby',   'Wraps himself in blankets. Does not move for hours.',                   'available',    '2026-04-01'),
-('Chairman Meow', 'Russian Blue',       36, 'adult',   'male',   'gray',          'Commands the room. Other cats listen to him somehow.',                  'available',    '2026-04-03'),
-('Cheeto',        'Domestic Longhair',   5, 'kitten',  'male',   'orange',        'Leaves orange fur on everything. Worth it.',                            'available',    '2026-04-05'),
-('Bagel',         'Scottish Fold',      10, 'kitten',  'female', 'white/gray',    'Sits like a loaf. Folded ears, folded personality.',                    'available',    '2026-04-08'),
-('Nacho',         'Maine Coon',         48, 'adult',   'male',   'brown tabby',   'Big guy. Gentle though. Scared of cucumbers.',                          'available',    '2026-04-10'),
-('Thundercat',    'Norwegian Forest',    7, 'kitten',  'male',   'black',         'Name is bigger than he is. Still figuring out gravity.',                'available',    '2026-04-12');
+('Pudding',       'British Shorthair',   48, 'adult',         'female', 'cream',         'Hit by a car near shelter. Brought in by a passerby. Injuries severe.',  'euthanized',   '2025-10-22'),
+-- id=23
+('Puss in Boots', 'Domestic Shorthair',  24, 'adult',         'male',   'orange',        'Thinks he is the main character. Very dramatic.',                        'available',    '2026-03-15'),
+-- id=24
+('Waffle',        'Munchkin',             8, 'kitten',        'female', 'cream',         'Tiny and round. Wobbles when she walks.',                                'available',    '2026-03-20'),
+-- id=25
+('Dorito',        'Bengal',              14, 'kitten',        'male',   'spotted orange','Crunchy personality. Loud at 3am for no reason.',                        'available',    '2026-03-22'),
+-- id=26
+('Mr Whiskers',   'Persian',             60, 'senior',        'male',   'white',         'Very distinguished. Looks disappointed in everyone.',                    'available',    '2026-03-25'),
+-- id=27
+('Burrito',       'Ragdoll',             18, 'adult',         'male',   'brown tabby',   'Wraps himself in blankets. Does not move for hours.',                    'available',    '2026-04-01'),
+-- id=28
+('Chairman Meow', 'Russian Blue',        36, 'adult',         'male',   'gray',          'Commands the room. Other cats listen to him somehow.',                   'available',    '2026-04-03'),
+-- id=29
+('Cheeto',        'Domestic Longhair',    5, 'kitten',        'male',   'orange',        'Leaves orange fur on everything. Worth it.',                             'available',    '2026-04-05'),
+-- id=30
+('Bagel',         'Scottish Fold',       10, 'kitten',        'female', 'white/gray',    'Sits like a loaf. Folded ears, folded personality.',                     'available',    '2026-04-08'),
+-- id=31
+('Nacho',         'Maine Coon',          48, 'adult',         'male',   'brown tabby',   'Big guy. Gentle though. Scared of cucumbers.',                           'available',    '2026-04-10'),
+-- id=32
+('Thundercat',    'Norwegian Forest',     7, 'kitten',        'male',   'black',         'Name is bigger than he is. Still figuring out gravity.',                 'available',    '2026-04-12');
 
 
--- 2. adopter (12 rows)
+-- 2. adopter (12 rows)  adopter_id = 1..12
 INSERT INTO adopter (first_name, last_name, email, phone, city, address, birth_year, age) VALUES
 ('Jiwon',    'Kim',   'jiwon.kim83@naver.com',      '010-3821-4756', 'Seoul',   '123 Gangnam-daero, Gangnam-gu',   1990, 36),
 ('Minseo',   'Park',  'ms_park85@kakao.com',         '010-9042-3318', 'Busan',   '45 Haeundae-ro, Haeundae-gu',    1985, 41),
@@ -77,7 +86,7 @@ INSERT INTO adopter (first_name, last_name, email, phone, city, address, birth_y
 ('Eunji',    'Kwon',  'eunjikwon96@gmail.com',       '010-4470-8812', 'Seoul',   '11 Apgujeong-ro, Gangnam-gu',     1996, 30);
 
 
--- 3. shelter (10 rows)
+-- 3. shelter (10 rows)  shelter_id = 1..10
 INSERT INTO shelter (shelter_name, city, manager_name) VALUES
 ('Mapo Cat Care Center',       'Seoul',   'Kim Sangwon'),
 ('Haeundae Animal Shelter',    'Busan',   'Lee Jinyoung'),
@@ -92,20 +101,6 @@ INSERT INTO shelter (shelter_name, city, manager_name) VALUES
 
 
 -- 4. fee_schedule (12 rows)
---
---   fee_id  cat_type      period              price
---   1       kitten        2025-01-01~06-30    120.00
---   2       kitten        2025-07-01~12-31    135.00
---   3       kitten        2026-01-01~now      150.00
---   4       adult         2025-01-01~06-30     90.00
---   5       adult         2025-07-01~12-31    100.00
---   6       adult         2026-01-01~now      110.00
---   7       senior        2025-01-01~06-30     50.00
---   8       senior        2025-07-01~12-31     60.00
---   9       senior        2026-01-01~now       70.00
---   10      special_needs 2025-01-01~06-30     30.00
---   11      special_needs 2025-07-01~12-31     40.00
---   12      special_needs 2026-01-01~now       50.00
 INSERT INTO fee_schedule (cat_type, unit_price, effective_from, effective_to, changed_by, change_reason) VALUES
 ('kitten',        120.00, '2025-01-01', '2025-06-30', 'Kim Sangwon',  'Opening fee set at launch'),
 ('kitten',        135.00, '2025-07-01', '2025-12-31', 'Lee Jinyoung', 'Raised due to higher demand in summer'),
@@ -123,104 +118,121 @@ INSERT INTO fee_schedule (cat_type, unit_price, effective_from, effective_to, ch
 
 -- 5. workers (12 rows)
 INSERT INTO workers (first_name, last_name, email, phone, role, employment_type, shelter_id, hire_date, salary) VALUES
-('Sangwon', 'Kim',    'sangwon.k@mapocat.org',      '010-3847-2291', 'admin',       'full_time', 1, '2020-03-01', 3500000.00),
-('Jinyoung','Lee',    'jy.lee@haeundaeshelter.org', '010-6612-5548', 'admin',       'full_time', 2, '2019-07-15', 3400000.00),
-('Sooyeon', 'Park',   'sypark@incheonrescue.org',   '010-9923-7714', 'coordinator', 'full_time', 1, '2021-01-10', 2800000.00),
-('Minho',   'Choi',   'dr.choi@mapocat.org',        '010-2238-4409', 'vet',         'full_time', 1, '2020-06-01', 4500000.00),
-('Haerin',  'Jung',   'haerin.j@suwonpet.org',      '010-5571-8836', 'admin',       'full_time', 5, '2022-02-20', 3200000.00),
-('Yoojin',  'Seo',    'vet.yoojin@haeundaeshelter.org','010-7784-3325','vet',        'full_time', 2, '2021-09-05', 4300000.00),
-('Donghun', 'Kang',   'kang.dh@mapocat.org',        '010-4456-9901', 'caretaker',   'part_time', 3, '2023-03-15', 1800000.00),
-('Nayeon',  'Im',     'nayeon.im@incheonrescue.org','010-8813-6672', 'caretaker',   'full_time', 4, '2022-08-01', 2200000.00),
-('Beomjun', 'Hwang',  'bj.hwang@volunteer.net',     '010-3390-5547', 'volunteer',   'volunteer', 6, '2024-01-01', NULL),
-('Seoyeon', 'Cho',    'sy.cho@volunteer.net',        '010-6625-1183', 'volunteer',   'volunteer', 7, '2024-03-10', NULL),
-('Jihoon',  'Ryu',    'jihoon.r@jejushelter.org',   '010-1147-8890', 'coordinator', 'full_time', 8, '2021-11-20', 2700000.00),
-('Areum',   'Son',    'areum.vet@sejongpet.org',    '010-9982-4416', 'vet',         'part_time', 9, '2023-05-01', 3100000.00);
+('Sangwon', 'Kim',    'sangwon.k@mapocat.org',         '010-3847-2291', 'admin',       'full_time', 1, '2020-03-01', 3500000.00),
+('Jinyoung','Lee',    'jy.lee@haeundaeshelter.org',    '010-6612-5548', 'admin',       'full_time', 2, '2019-07-15', 3400000.00),
+('Sooyeon', 'Park',   'sypark@incheonrescue.org',      '010-9923-7714', 'coordinator', 'full_time', 1, '2021-01-10', 2800000.00),
+('Minho',   'Choi',   'dr.choi@mapocat.org',           '010-2238-4409', 'vet',         'full_time', 1, '2020-06-01', 4500000.00),
+('Haerin',  'Jung',   'haerin.j@suwonpet.org',         '010-5571-8836', 'admin',       'full_time', 5, '2022-02-20', 3200000.00),
+('Yoojin',  'Seo',    'vet.yoojin@haeundaeshelter.org','010-7784-3325', 'vet',         'full_time', 2, '2021-09-05', 4300000.00),
+('Donghun', 'Kang',   'kang.dh@mapocat.org',           '010-4456-9901', 'caretaker',   'part_time', 3, '2023-03-15', 1800000.00),
+('Nayeon',  'Im',     'nayeon.im@incheonrescue.org',   '010-8813-6672', 'caretaker',   'full_time', 4, '2022-08-01', 2200000.00),
+('Beomjun', 'Hwang',  'bj.hwang@volunteer.net',        '010-3390-5547', 'volunteer',   'volunteer', 6, '2024-01-01', NULL),
+('Seoyeon', 'Cho',    'sy.cho@volunteer.net',           '010-6625-1183', 'volunteer',   'volunteer', 7, '2024-03-10', NULL),
+('Jihoon',  'Ryu',    'jihoon.r@jejushelter.org',      '010-1147-8890', 'coordinator', 'full_time', 8, '2021-11-20', 2700000.00),
+('Areum',   'Son',    'areum.vet@sejongpet.org',       '010-9982-4416', 'vet',         'part_time', 9, '2023-05-01', 3100000.00);
 
 
--- 6. adoption_transaction (20 rows)
-INSERT INTO adoption_transaction (transaction_timestamp, shelter_id, adopter_id, basket_id) VALUES
-('2025-02-15 10:30:00', 1, 1,  1001),
-('2025-03-18 14:00:00', 2, 2,  1002),
-('2025-04-25 11:15:00', 1, 3,  1003),
-('2025-05-02 09:45:00', 3, 4,  1004),
-('2025-05-20 15:30:00', 1, 5,  1005),
-('2025-06-10 13:00:00', 4, 6,  1006),
-('2025-08-14 10:00:00', 2, 7,  1007),
-('2025-09-20 16:30:00', 1, 8,  1008),
-('2025-10-25 11:00:00', 5, 9,  1009),
-('2025-11-01 14:30:00', 1, 10, 1010),
-('2025-11-05 09:00:00', 2, 11, 1011),
-('2025-12-08 15:00:00', 3, 12, 1012),
-('2026-01-10 10:30:00', 1, 1,  1013),
-('2026-01-12 13:45:00', 4, 2,  1014),
-('2026-02-15 11:00:00', 5, 3,  1015),
-('2026-02-18 14:00:00', 1, 4,  1016),
-('2026-03-20 10:00:00', 2, 5,  1017),
-('2026-03-22 15:30:00', 3, 6,  1018),
-('2026-04-25 09:30:00', 1, 7,  1019),
-('2026-04-28 16:00:00', 4, 8,  1020);
+-- 6. adopter_history (10 rows) [REQ14]
+--    Insert BEFORE adoption_transaction so adopter_history_id refs are valid
+INSERT INTO adopter_history (adopter_id, snapshot_date, city, address, birth_year, age, change_reason) VALUES
+(1,  '2025-06-01', 'Busan',   '10 Centum-ro, Haeundae-gu',       1990, 35, 'Relocated to Seoul for work'),
+(3,  '2025-09-15', 'Incheon', '5 Guwol-ro, Namdong-gu',          1995, 30, 'Was living in Incheon before moving to Seoul'),
+(5,  '2025-03-01', 'Seoul',   '30 Teheran-ro, Gangnam-gu',        1988, 37, 'Left Seoul, moved to Daegu with family'),
+(6,  '2024-12-01', 'Busan',   '77 Gwangbok-ro, Jung-gu',          1997, 27, 'Previous address before moving to Seoul'),
+(7,  '2024-07-10', 'Seoul',   '100 Dobong-ro, Dobong-gu',         1983, 41, 'Moved out of Seoul to Suwon'),
+(2,  '2025-01-20', 'Daegu',   '15 Dongdaegu-ro, Dong-gu',         1985, 40, 'Moved from Daegu to Busan for new job'),
+(8,  '2026-01-05', 'Incheon', '3 Sinpo-ro, Jung-gu',              1999, 26, 'Old Incheon address, now in Seoul'),
+(10, '2025-11-10', 'Suwon',   '88 Gwonseon-ro, Gwonseon-gu',      1994, 31, 'Moved from Suwon to Seoul for school'),
+(4,  '2025-08-22', 'Seoul',   '40 Bupyeong-daero, Bupyeong-gu',  1992, 33, 'Transferred to Incheon branch at work'),
+(11, '2025-04-15', 'Busan',   '22 Nampo-ro, Jung-gu',             1987, 38, 'Left Busan, settling in Gwangju');
 
 
--- 7. adoption_basket_items (25 rows)
---    basket_id refs adoption_transaction.basket_id
---    cat_id refs cat (1-15 only, euthanized cats not in baskets)
---    fee_id refs fee_schedule:
+-- 7. adoption_transaction (20 rows)
+--    No basket_id — uses transaction_id as PK (AUTO_INCREMENT 1..20)
+--    adopter_history_id: NULL if adopter had no demographic change before this transaction
+INSERT INTO adoption_transaction (transaction_timestamp, shelter_id, adopter_id, adopter_history_id) VALUES
+('2025-02-15 10:30:00', 1, 1,  1),
+('2025-03-18 14:00:00', 2, 2,  NULL),
+('2025-04-25 11:15:00', 1, 3,  2),
+('2025-05-02 09:45:00', 3, 4,  NULL),
+('2025-05-20 15:30:00', 1, 5,  3),
+('2025-06-10 13:00:00', 4, 6,  4),
+('2025-08-14 10:00:00', 2, 7,  5),
+('2025-09-20 16:30:00', 1, 8,  NULL),
+('2025-10-25 11:00:00', 5, 9,  NULL),
+('2025-11-01 14:30:00', 1, 10, NULL),
+('2025-11-05 09:00:00', 2, 11, NULL),
+('2025-12-08 15:00:00', 3, 12, NULL),
+('2026-01-10 10:30:00', 1, 1,  NULL),
+('2026-01-12 13:45:00', 4, 2,  6),
+('2026-02-15 11:00:00', 5, 3,  NULL),
+('2026-02-18 14:00:00', 1, 4,  9),
+('2026-03-20 10:00:00', 2, 5,  NULL),
+('2026-03-22 15:30:00', 3, 6,  NULL),
+('2026-04-25 09:30:00', 1, 7,  NULL),
+('2026-04-28 16:00:00', 4, 8,  7);
+
+
+-- 8. adoption_basket_items (25 rows)
+--    transaction_id refs adoption_transaction (1..20)
+--    fee_id refs fee_schedule (1..12)
 --      Jan-Jun 2025: kitten=1, adult=4, senior=7, special=10
 --      Jul-Dec 2025: kitten=2, adult=5, senior=8, special=11
 --      2026+:        kitten=3, adult=6, senior=9, special=12
-INSERT INTO adoption_basket_items (basket_id, cat_id, fee_id, quantity, unit_price_at_sale) VALUES
-(1001, 3,  4, 1,  90.00),
-(1002, 11, 4, 1,  90.00),
-(1003, 1,  1, 1, 120.00),
-(1004, 4,  1, 1, 120.00),
-(1005, 2,  4, 1,  90.00),
-(1006, 6,  4, 1,  90.00),
-(1007, 5,  8, 1,  60.00),
-(1008, 8,  5, 1, 100.00),
-(1009, 10, 2, 1, 135.00),
-(1010, 12, 8, 1,  60.00),
-(1011, 7,  2, 1, 135.00),
-(1012, 13, 2, 1, 135.00),
-(1013, 15, 6, 1, 110.00),
-(1014, 9,  6, 1, 110.00),
-(1015, 4,  3, 1, 150.00),
-(1016, 1,  3, 1, 150.00),
-(1017, 2,  6, 1, 110.00),
-(1018, 8,  6, 1, 110.00),
-(1019, 10, 3, 1, 150.00),
-(1020, 12, 9, 1,  70.00),
-(1003, 7,  1, 1, 120.00),
-(1005, 13, 1, 1, 120.00),
-(1010, 15, 5, 1, 100.00),
-(1015, 5,  9, 1,  70.00),
-(1019, 6,  6, 1, 110.00);
+INSERT INTO adoption_basket_items (transaction_id, cat_id, fee_id, quantity, unit_price_at_sale) VALUES
+(1,  3,  4, 1,  90.00),
+(2,  11, 4, 1,  90.00),
+(3,  1,  1, 1, 120.00),
+(4,  4,  1, 1, 120.00),
+(5,  2,  4, 1,  90.00),
+(6,  6,  4, 1,  90.00),
+(7,  5,  8, 1,  60.00),
+(8,  8,  5, 1, 100.00),
+(9,  10, 2, 1, 135.00),
+(10, 12, 8, 1,  60.00),
+(11, 7,  2, 1, 135.00),
+(12, 13, 2, 1, 135.00),
+(13, 15, 6, 1, 110.00),
+(14, 9,  6, 1, 110.00),
+(15, 4,  3, 1, 150.00),
+(16, 1,  3, 1, 150.00),
+(17, 2,  6, 1, 110.00),
+(18, 8,  6, 1, 110.00),
+(19, 10, 3, 1, 150.00),
+(20, 12, 9, 1,  70.00),
+(3,  7,  1, 1, 120.00),
+(5,  13, 1, 1, 120.00),
+(10, 15, 5, 1, 100.00),
+(15, 5,  9, 1,  70.00),
+(19, 6,  6, 1, 110.00);
 
 
--- 8. total_adoption_fees (20 rows)
-INSERT INTO total_adoption_fees (basket_id, total_amount) VALUES
-(1001,  90.00),
-(1002,  90.00),
-(1003, 240.00),
-(1004, 120.00),
-(1005, 210.00),
-(1006,  90.00),
-(1007,  60.00),
-(1008, 100.00),
-(1009, 135.00),
-(1010, 160.00),
-(1011, 135.00),
-(1012, 135.00),
-(1013, 110.00),
-(1014, 110.00),
-(1015, 220.00),
-(1016, 150.00),
-(1017, 110.00),
-(1018, 110.00),
-(1019, 260.00),
-(1020,  70.00);
+-- 9. total_adoption_fees (20 rows)
+--    transaction_id refs adoption_transaction (1..20)
+INSERT INTO total_adoption_fees (transaction_id, total_amount) VALUES
+(1,   90.00),
+(2,   90.00),
+(3,  240.00),
+(4,  120.00),
+(5,  210.00),
+(6,   90.00),
+(7,   60.00),
+(8,  100.00),
+(9,  135.00),
+(10, 160.00),
+(11, 135.00),
+(12, 135.00),
+(13, 110.00),
+(14, 110.00),
+(15, 220.00),
+(16, 150.00),
+(17, 110.00),
+(18, 110.00),
+(19, 260.00),
+(20,  70.00);
 
 
--- 9. medical_records (15 rows)
+-- 10. medical_records (15 rows)
 INSERT INTO medical_records (cat_id, worker_id, record_date, type, notes) VALUES
 (1,  4, '2026-01-12', 'checkup',   'Weight normal. Ears clean. No issues found.'),
 (2,  4, '2026-01-16', 'vaccine',   'FVRCP booster done. Cat was calm during procedure.'),
@@ -239,7 +251,7 @@ INSERT INTO medical_records (cat_id, worker_id, record_date, type, notes) VALUES
 (15, 4, '2026-02-27', 'checkup',   'Scratched staff during exam. Healthy otherwise. High energy.');
 
 
--- 10. euthanization_records (10 rows)
+-- 11. euthanization_records (10 rows)
 INSERT INTO euthanization_records
     (cat_id, worker_id, authorized_by, scheduled_date, performed_date,
      reason, method, second_opinion, consent_form, notes) VALUES
@@ -275,7 +287,7 @@ INSERT INTO euthanization_records
     'Second opinion for Dotori. Neurological damage confirmed as irreversible.');
 
 
--- 11. salary_history (10 rows)
+-- 12. salary_history (10 rows)
 INSERT INTO salary_history (worker_id, old_salary, new_salary, change_date, reason) VALUES
 (1,  3200000.00, 3500000.00, '2024-01-01', 'Yearly review increase'),
 (2,  3100000.00, 3400000.00, '2024-01-01', 'Yearly review increase'),
@@ -289,7 +301,7 @@ INSERT INTO salary_history (worker_id, old_salary, new_salary, change_date, reas
 (12, 2800000.00, 3100000.00, '2025-06-01', 'Upgraded from intern to part-time vet');
 
 
--- 12. schedules (15 rows)
+-- 13. schedules (15 rows)
 INSERT INTO schedules (worker_id, work_date, shift_start, shift_end) VALUES
 (1,  '2026-05-26', '09:00:00', '18:00:00'),
 (3,  '2026-05-26', '09:30:00', '18:30:00'),
@@ -306,17 +318,3 @@ INSERT INTO schedules (worker_id, work_date, shift_start, shift_end) VALUES
 (11, '2026-05-28', '09:00:00', '18:00:00'),
 (12, '2026-05-29', '10:00:00', '15:30:00'),
 (9,  '2026-05-29', '09:00:00', '13:00:00');
-
-
--- 13. adopter_history (10 rows)
-INSERT INTO adopter_history (adopter_id, snapshot_date, city, address, birth_year, age, change_reason) VALUES
-(1,  '2025-06-01', 'Busan',   '10 Centum-ro, Haeundae-gu',       1990, 35, 'Relocated to Seoul for work'),
-(3,  '2025-09-15', 'Incheon', '5 Guwol-ro, Namdong-gu',          1995, 30, 'Was living in Incheon before moving to Seoul'),
-(5,  '2025-03-01', 'Seoul',   '30 Teheran-ro, Gangnam-gu',        1988, 37, 'Left Seoul, moved to Daegu with family'),
-(6,  '2024-12-01', 'Busan',   '77 Gwangbok-ro, Jung-gu',          1997, 27, 'Previous address before moving to Seoul'),
-(7,  '2024-07-10', 'Seoul',   '100 Dobong-ro, Dobong-gu',         1983, 41, 'Moved out of Seoul to Suwon'),
-(2,  '2025-01-20', 'Daegu',   '15 Dongdaegu-ro, Dong-gu',         1985, 40, 'Moved from Daegu to Busan for new job'),
-(8,  '2026-01-05', 'Incheon', '3 Sinpo-ro, Jung-gu',              1999, 26, 'Old Incheon address, now in Seoul'),
-(10, '2025-11-10', 'Suwon',   '88 Gwonseon-ro, Gwonseon-gu',      1994, 31, 'Moved from Suwon to Seoul for school'),
-(4,  '2025-08-22', 'Seoul',   '40 Bupyeong-daero, Bupyeong-gu',  1992, 33, 'Transferred to Incheon branch at work'),
-(11, '2025-04-15', 'Busan',   '22 Nampo-ro, Jung-gu',             1987, 38, 'Left Busan, settling in Gwangju');
