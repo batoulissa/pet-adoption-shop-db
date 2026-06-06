@@ -287,24 +287,26 @@ public class AdoptionMenu {
     // =========================================================
     private static void viewTransactionDetails() {
         int txnId = InputHelper.getInt("Enter transaction ID: ");
-
+     
         String headerSql = """
                 SELECT
-                    at2.transaction_id,
-                    at2.transaction_timestamp,
-                    a.first_name, a.last_name,
-                    ah.city       AS adopter_city_at_time,
-                    ah.address    AS adopter_address_at_time,
-                    ah.age        AS adopter_age_at_time,
-                    s.shelter_name,
-                    taf.total_amount
+                    at2.transaction_id AS txn_id,
+                    at2.transaction_timestamp AS timestamp,
+                    a.first_name,
+                    a.last_name,
+                    ah.city       AS city_at_time,
+                    ah.address    AS addr_at_time,
+                    ah.age        AS age_at_time,
+                    s.shelter_name AS shelter,
+                    taf.total_amount AS total
                 FROM adoption_transaction at2
                 JOIN adopter a   ON at2.adopter_id = a.adopter_id
                 LEFT JOIN adopter_history ah ON at2.adopter_history_id = ah.history_id
                 JOIN shelter s   ON at2.shelter_id = s.shelter_id
                 JOIN total_adoption_fees taf ON at2.transaction_id = taf.transaction_id
                 WHERE at2.transaction_id = ?
-                """;
+                ORDER BY at2.transaction_id ASC
+                """;     
 
         String itemsSql = """
                 SELECT
