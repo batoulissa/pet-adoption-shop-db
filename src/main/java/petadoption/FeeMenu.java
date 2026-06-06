@@ -86,7 +86,7 @@ public class FeeMenu {
                         f.cat_type,
                         f.unit_price,
                         f.effective_from,
-                        f.effective_to,
+                        COALESCE(CAST(f.effective_to AS CHAR), 'CURRENT') AS effective_to,
                         COUNT(i.basket_item_id) AS adoption_count,
                         COALESCE(SUM(i.quantity * i.unit_price_at_sale), 0) AS collected_fee
                     FROM fee_schedule f
@@ -100,26 +100,7 @@ public class FeeMenu {
             pstmt.setString(1, catType);
 
             ResultSet rs = pstmt.executeQuery();
-
-            System.out.printf("%-15s %-10s %-15s %-15s %-15s %-15s%n",
-                    "Cat Type", "Fee", "From", "To", "Adoptions", "Collected");
-            System.out.println("-------------------------------------------------------------------------------------");
-
-            boolean found = false;
-            while (rs.next()) {
-                found = true;
-                System.out.printf("%-15s %-10.2f %-15s %-15s %-15d %-15.2f%n",
-                        rs.getString("cat_type"),
-                        rs.getDouble("unit_price"),
-                        rs.getDate("effective_from"),
-                        rs.getDate("effective_to") == null ? "CURRENT" : rs.getDate("effective_to").toString(),
-                        rs.getInt("adoption_count"),
-                        rs.getDouble("collected_fee"));
-            }
-
-            if (!found) {
-                System.out.println("No fee history found for this cat type.");
-            }
+            TablePrinter.print(rs);
 
             rs.close();
             pstmt.close();
