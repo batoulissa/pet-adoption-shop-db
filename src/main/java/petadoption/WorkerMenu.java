@@ -6,8 +6,9 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.time.LocalDate;
 import java.util.Scanner;
+
+import petadoption.TablePrinter;
 
 public class WorkerMenu {
     private final Connection conn;
@@ -107,18 +108,20 @@ public class WorkerMenu {
     private void searchWorkersByRole() {
         try {
             System.out.print("Role to search (volunteer/vet/coordinator/admin/caretaker): ");
-            String role = scanner.nextLine();
+            String role = scanner.nextLine().trim().toLowerCase();
 
             String sql = """
                     SELECT worker_id, first_name, last_name, role, employment_type,
-                           salary, hire_date, shelter_name, shelter_city
-                    FROM v_worker_salary
-                    WHERE role = ?
+                           salary, hire_date, shelter_id
+                    FROM workers
+                    WHERE LOWER(TRIM(role)) = ?
+                       OR (? = 'volunteer' AND LOWER(TRIM(employment_type)) = 'volunteer')
                     ORDER BY last_name, first_name
                     """;
 
             PreparedStatement pstmt = conn.prepareStatement(sql);
             pstmt.setString(1, role);
+            pstmt.setString(2, role);
 
             ResultSet rs = pstmt.executeQuery();
             TablePrinter.print(rs);
