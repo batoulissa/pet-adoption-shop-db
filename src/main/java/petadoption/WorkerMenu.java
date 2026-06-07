@@ -11,6 +11,13 @@ import java.util.Scanner;
 import petadoption.TablePrinter;
 
 public class WorkerMenu {
+    private static final String RESET  = "\u001B[0m";
+    private static final String BOLD   = "\u001B[1m";
+    private static final String CYAN   = "\u001B[36m";
+    private static final String GREEN  = "\u001B[32m";
+    private static final String RED    = "\u001B[31m";
+    private static final String YELLOW = "\u001B[33m";
+    private static final String WHITE  = "\u001B[37m";
     private final Connection conn;
     private final Scanner scanner;
 
@@ -22,15 +29,18 @@ public class WorkerMenu {
     public void showMenu() {
         while (true) {
             System.out.println();
-            System.out.println("===== Worker Menu =====");
-            System.out.println("1. Add worker");
-            System.out.println("2. Search workers by role");
-            System.out.println("3. Update worker salary");
-            System.out.println("4. Add worker schedule");
-            System.out.println("5. Show schedules by date");
-            System.out.println("6. Delete worker schedule");
-            System.out.println("7. Delete worker");
-            System.out.println("0. Back");
+            System.out.println();
+            System.out.println(CYAN + BOLD + "╔══════════════════════════════════════════════╗" + RESET);
+            System.out.println(CYAN + BOLD + "║               👷 Worker Menu                 ║" + RESET);
+            System.out.println(CYAN + BOLD + "╚══════════════════════════════════════════════╝" + RESET);
+            System.out.println("  " + CYAN + BOLD + "[1]" + RESET + WHITE + " Add worker"+ RESET);
+            System.out.println("  " + CYAN + BOLD + "[2]" + RESET + WHITE + " Search workers by role"+ RESET);
+            System.out.println("  " + CYAN + BOLD + "[3]" + RESET + WHITE + " Update worker salary"+ RESET);
+            System.out.println("  " + CYAN + BOLD + "[4]" + RESET + WHITE + " Add worker schedule"+ RESET);
+            System.out.println("  " + CYAN + BOLD + "[5]" + RESET + WHITE + " Show schedules by date"+ RESET);
+            System.out.println("  " + CYAN + BOLD + "[6]" + RESET + WHITE + " Delete worker schedule"+ RESET);
+            System.out.println("  " + CYAN + BOLD + "[7]" + RESET + WHITE + " Delete worker"+ RESET);
+            System.out.println("  " + RED  + BOLD + "[0]" + RESET + RED   + " Back to Main Menu"+ RESET);
 
             int choice = readInt("Choose menu: ");
 
@@ -45,7 +55,7 @@ public class WorkerMenu {
                 case 0 -> {
                     return;
                 }
-                default -> System.out.println("Invalid choice.");
+                default -> System.out.println(RED + "  ✘ Invalid choice." + RESET);
             }
         }
     }
@@ -95,7 +105,7 @@ public class WorkerMenu {
             pstmt.setBigDecimal(9, salary);
 
             int rows = pstmt.executeUpdate();
-            System.out.println(rows + " worker inserted.");
+            System.out.println(GREEN + "  ✔ Worker inserted successfully." + RESET);
 
             pstmt.close();
         } catch (SQLException e) {
@@ -169,7 +179,7 @@ public class WorkerMenu {
 
                 if (!rs.next()) {
                     conn.rollback();
-                    System.out.println("Worker not found.");
+                    System.out.println(RED + "  ✘ Worker not found." + RESET);
                     rs.close();
                     selectStmt.close();
                     return;
@@ -196,7 +206,7 @@ public class WorkerMenu {
                 updateStmt.close();
                 historyStmt.close();
 
-                System.out.println("Worker salary updated successfully.");
+                System.out.println(GREEN + "  ✔ Worker salary updated successfully." + RESET);
             } catch (SQLException e) {
                 conn.rollback();
                 System.out.println("Salary update failed. Transaction rolled back: " + e.getMessage());
@@ -234,7 +244,7 @@ public class WorkerMenu {
             pstmt.setString(4, shiftEnd);
 
             int rows = pstmt.executeUpdate();
-            System.out.println(rows + " schedule inserted.");
+            System.out.println(GREEN + "  ✔ Schedule inserted successfully." + RESET);
 
             pstmt.close();
         } catch (SQLException e) {
@@ -284,7 +294,7 @@ public class WorkerMenu {
             int rows = pstmt.executeUpdate();
 
             if (rows > 0) {
-                System.out.println("Schedule deleted.");
+                System.out.println(GREEN + "  ✔ Schedule deleted." + RESET);
             } else {
                 System.out.println("No schedule found with that ID.");
             }
@@ -310,7 +320,7 @@ public class WorkerMenu {
             int rows = pstmt.executeUpdate();
 
             if (rows > 0) {
-                System.out.println("Worker deleted.");
+                System.out.println(GREEN + "  ✔ Worker deleted." + RESET);
             } else {
                 System.out.println("No worker found with that ID.");
             }

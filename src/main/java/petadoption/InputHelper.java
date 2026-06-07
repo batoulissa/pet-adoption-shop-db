@@ -3,7 +3,12 @@ package petadoption;
 import java.util.Scanner;
 
 public class InputHelper {
-    private static Scanner scanner = new Scanner(System.in);
+    // Shared scanner — set once by Main.java to avoid two scanners on stdin
+    private static Scanner scanner;
+
+    public static void setScanner(Scanner s) {
+        scanner = s;
+    }
 
     //reads string from user
     public static String getString(String prompt) {
@@ -38,15 +43,13 @@ public class InputHelper {
     //reads boolean (Y/N input) from user (eg: are you sure you want to delete this cat? Y/N)
     public static boolean getBool(String prompt) {
         while (true) {
-            System.out.print(prompt+" (Y/N): ");
-            String input=scanner.nextLine().trim().toUpperCase();
+            System.out.print(prompt + " (Y/N): ");
+            String input = scanner.nextLine().trim().toUpperCase();
             if (input.equals("Y")) {
                 return true;
-            }
-            else if (input.equals("N")) {
+            } else if (input.equals("N")) {
                 return false;
-            }
-            else {
+            } else {
                 System.out.println("Invalid input. Enter Y or N.");
             }
         }
@@ -55,12 +58,11 @@ public class InputHelper {
     //reads menu choice between min and max (eg: select a menu between 1 and 5)
     public static int getMenuChoice(String prompt, int min, int max) {
         while (true) {
-            int choice=getInt(prompt);
-            if (choice>=min && choice<=max) {
+            int choice = getInt(prompt);
+            if (choice >= min && choice <= max) {
                 return choice;
-            }
-            else {
-                System.out.println("Invalid input. Please enter a number between "+min+" and "+max+": ");
+            } else {
+                System.out.println("Invalid input. Please enter a number between " + min + " and " + max + ": ");
             }
         }
     }

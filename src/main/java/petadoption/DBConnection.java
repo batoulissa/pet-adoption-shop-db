@@ -7,9 +7,9 @@ public class DBConnection {
     public static Connection connect() {
         try {
             //make sure to enter your own database URL, username and password here
-            String url = "jdbc:mysql://localhost:3306/petstore";
+            String url = "jdbc:mysql://localhost:3306/cat_adoption_db";
             String user = "root";
-            String password = "1234";
+            String password = "";
 
             Connection conn = DriverManager.getConnection(url, user, password);
 
