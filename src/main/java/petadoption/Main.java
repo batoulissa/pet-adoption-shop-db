@@ -12,32 +12,53 @@ import petadoption.FeeMenu;
 
 public class Main {
 
+    // Color constants
+    static final String RESET  = "\u001B[0m";
+    static final String BOLD   = "\u001B[1m";
+    static final String CYAN   = "\u001B[36m";
+    static final String GREEN  = "\u001B[32m";
+    static final String RED    = "\u001B[31m";
+    static final String YELLOW = "\u001B[33m";
+    static final String WHITE  = "\u001B[37m";
+
+    // Standard box width for all menus
+    static final String TOP = CYAN + BOLD + "╔══════════════════════════════════════════════╗" + RESET;
+    static final String BOT = CYAN + BOLD + "╚══════════════════════════════════════════════╝" + RESET;
+
     public static void main(String[] args) {
         try (Connection conn = DBConnection.connect();
-             Scanner scanner = new Scanner(System.in)) {
+                Scanner scanner = new Scanner(System.in)) {
 
             if (conn == null) {
-                System.out.println("Database connection failed.");
+                System.out.println(RED + "✘ Database connection failed." + RESET);
                 return;
             }
 
-            CatMenu catMenu = new CatMenu(conn, scanner);
-            FeeMenu feeMenu = new FeeMenu(conn, scanner);
+            // Set shared scanner for InputHelper (fixes dual-scanner bug)
+            InputHelper.setScanner(scanner);
+
+            CatMenu catMenu       = new CatMenu(conn, scanner);
+            FeeMenu feeMenu       = new FeeMenu(conn, scanner);
             WorkerMenu workerMenu = new WorkerMenu(conn, scanner);
             ReportMenu reportMenu = new ReportMenu(conn, scanner);
 
             while (true) {
                 System.out.println();
-                System.out.println("===== Cat Adoption Center System =====");
-                System.out.println("1. Cat Menu");
-                System.out.println("2. Fee Menu");
-                System.out.println("3. Adopter Menu");
-                System.out.println("4. Adoption Menu");
-                System.out.println("5. Worker Menu");
-                System.out.println("6. Report Menu");
-                System.out.println("0. Exit");
+                System.out.println(TOP);
+                System.out.println(CYAN + BOLD + "║          CAT ADOPTION CENTER SYSTEM          ║" + RESET);
+                System.out.println(CYAN + BOLD + "║               🐱  WELCOME!  🐱               ║" + RESET);
+                System.out.println(BOT);
+                System.out.println();
+                System.out.println("  " + CYAN + BOLD + "[1]" + RESET + WHITE + " Cat Menu"      + RESET);
+                System.out.println("  " + CYAN + BOLD + "[2]" + RESET + WHITE + " Fee Menu"      + RESET);
+                System.out.println("  " + CYAN + BOLD + "[3]" + RESET + WHITE + " Adopter Menu"  + RESET);
+                System.out.println("  " + CYAN + BOLD + "[4]" + RESET + WHITE + " Adoption Menu" + RESET);
+                System.out.println("  " + CYAN + BOLD + "[5]" + RESET + WHITE + " Worker Menu"   + RESET);
+                System.out.println("  " + CYAN + BOLD + "[6]" + RESET + WHITE + " Report Menu"   + RESET);
+                System.out.println("  " + RED  + BOLD + "[0]" + RESET + RED   + " Exit"          + RESET);
+                System.out.println();
 
-                int choice = readInt(scanner, "Choose menu: ");
+                int choice = readInt(scanner, YELLOW + "  ▶ Choose: " + RESET);
 
                 switch (choice) {
                     case 1 -> showCatMenu(scanner, catMenu);
@@ -47,28 +68,34 @@ public class Main {
                     case 5 -> workerMenu.showMenu();
                     case 6 -> reportMenu.showMenu();
                     case 0 -> {
-                        System.out.println("Program ended.");
+                        System.out.println();
+                        System.out.println(GREEN + "  Goodbye! See you next time~ 🐱" + RESET);
+                        System.out.println();
                         return;
                     }
-                    default -> System.out.println("Invalid choice.");
+                    default -> System.out.println(RED + "  ✘ Invalid choice." + RESET);
                 }
             }
 
         } catch (SQLException e) {
-            System.out.println("Database error: " + e.getMessage());
+            System.out.println(RED + "Database error: " + e.getMessage() + RESET);
         }
     }
 
     private static void showCatMenu(Scanner scanner, CatMenu catMenu) {
         while (true) {
             System.out.println();
-            System.out.println("===== Cat Menu =====");
-            System.out.println("1. Add cat");
-            System.out.println("2. Search available cats by type");
-            System.out.println("3. Delete available cat");
-            System.out.println("0. Back");
+            System.out.println(TOP);
+            System.out.println(CYAN + BOLD + "║                 🐱 Cat Menu                  ║" + RESET);
+            System.out.println(BOT);
+            System.out.println();
+            System.out.println("  " + CYAN + BOLD + "[1]" + RESET + WHITE + " Add cat"                       + RESET);
+            System.out.println("  " + CYAN + BOLD + "[2]" + RESET + WHITE + " Search available cats by type" + RESET);
+            System.out.println("  " + CYAN + BOLD + "[3]" + RESET + WHITE + " Delete available cat"          + RESET);
+            System.out.println("  " + RED  + BOLD + "[0]" + RESET + RED   + " Back to Main Menu"                          + RESET);
+            System.out.println();
 
-            int choice = readInt(scanner, "Choose menu: ");
+            int choice = readInt(scanner, YELLOW + "  ▶ Choose: " + RESET);
 
             switch (choice) {
                 case 1 -> catMenu.addCat();
@@ -77,7 +104,7 @@ public class Main {
                 case 0 -> {
                     return;
                 }
-                default -> System.out.println("Invalid choice.");
+                default -> System.out.println(RED + "  ✘ Invalid choice." + RESET);
             }
         }
     }
@@ -85,12 +112,16 @@ public class Main {
     private static void showFeeMenu(Scanner scanner, FeeMenu feeMenu) {
         while (true) {
             System.out.println();
-            System.out.println("===== Fee Menu =====");
-            System.out.println("1. Update adoption fee");
-            System.out.println("2. Analyze fee change");
-            System.out.println("0. Back");
+            System.out.println(TOP);
+            System.out.println(CYAN + BOLD + "║                 💰 Fee Menu                  ║" + RESET);
+            System.out.println(BOT);
+            System.out.println();
+            System.out.println("  " + CYAN + BOLD + "[1]" + RESET + WHITE + " Update adoption fee" + RESET);
+            System.out.println("  " + CYAN + BOLD + "[2]" + RESET + WHITE + " Analyze fee change"  + RESET);
+            System.out.println("  " + RED  + BOLD + "[0]" + RESET + RED   + " Back to Main Menu"                + RESET);
+            System.out.println();
 
-            int choice = readInt(scanner, "Choose menu: ");
+            int choice = readInt(scanner, YELLOW + "  ▶ Choose: " + RESET);
 
             switch (choice) {
                 case 1 -> feeMenu.updateAdoptionFee();
@@ -98,7 +129,7 @@ public class Main {
                 case 0 -> {
                     return;
                 }
-                default -> System.out.println("Invalid choice.");
+                default -> System.out.println(RED + "  ✘ Invalid choice." + RESET);
             }
         }
     }
@@ -109,7 +140,7 @@ public class Main {
                 System.out.print(prompt);
                 return Integer.parseInt(scanner.nextLine().trim());
             } catch (NumberFormatException e) {
-                System.out.println("Invalid input. Please enter a number.");
+                System.out.println(RED + "  ✘ Invalid input. Please enter a number." + RESET);
             }
         }
     }

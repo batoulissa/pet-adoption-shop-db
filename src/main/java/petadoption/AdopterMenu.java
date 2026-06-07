@@ -3,26 +3,37 @@ package petadoption;
 import java.sql.*;
 
 public class AdopterMenu {
+    private static final String RESET  = "\u001B[0m";
+    private static final String BOLD   = "\u001B[1m";
+    private static final String CYAN   = "\u001B[36m";
+    private static final String GREEN  = "\u001B[32m";
+    private static final String RED    = "\u001B[31m";
+    private static final String YELLOW = "\u001B[33m";
+    private static final String WHITE  = "\u001B[37m";
 
     // =========================================================
     // MAIN MENU
     // =========================================================
     public static void menu() {
         while (true) {
-            System.out.println("\n========== ADOPTER MENU ==========");
-            System.out.println(" 1. View all adopters");
-            System.out.println(" 2. Search adopter by name");
-            System.out.println(" 3. View adopter details (with adoption history)");
-            System.out.println(" 4. Add new adopter");
-            System.out.println(" 5. Update adopter info (records demographic snapshot)");
-            System.out.println(" 6. Delete adopter");
-            System.out.println(" 7. View adopter demographic history");
-            System.out.println(" 8. Compare sales BEFORE vs AFTER demographic change");
-            System.out.println(" 9. Sales breakdown by city across all adopters");
-            System.out.println(" 0. Back to main menu");
-            System.out.println("====================================");
+            System.out.println();
+            System.out.println(CYAN + BOLD + "╔══════════════════════════════════════════════╗" + RESET);
+            System.out.println(CYAN + BOLD + "║               🧑 Adopter Menu                ║" + RESET);
+            System.out.println(CYAN + BOLD + "╚══════════════════════════════════════════════╝" + RESET);
+            System.out.println();
+            System.out.println("  " + CYAN + BOLD + "[1]" + RESET + WHITE + " View all adopters"                              + RESET);
+            System.out.println("  " + CYAN + BOLD + "[2]" + RESET + WHITE + " Search adopter by name"                         + RESET);
+            System.out.println("  " + CYAN + BOLD + "[3]" + RESET + WHITE + " View adopter details (with adoption history)"   + RESET);
+            System.out.println("  " + CYAN + BOLD + "[4]" + RESET + WHITE + " Add new adopter"                                + RESET);
+            System.out.println("  " + CYAN + BOLD + "[5]" + RESET + WHITE + " Update adopter info (demographic snapshot)"     + RESET);
+            System.out.println("  " + CYAN + BOLD + "[6]" + RESET + WHITE + " Delete adopter"                                 + RESET);
+            System.out.println("  " + CYAN + BOLD + "[7]" + RESET + WHITE + " View adopter demographic history"                 + RESET);
+            System.out.println("  " + CYAN + BOLD + "[8]" + RESET + WHITE + " Compare sales BEFORE vs AFTER demographic change" + RESET);
+            System.out.println("  " + CYAN + BOLD + "[9]" + RESET + WHITE + " Sales breakdown by city across all adopters"      + RESET);
+            System.out.println("  " + RED  + BOLD + "[0]" + RESET + RED   + " Back to Main Menu"                                             + RESET);
+            System.out.println();
 
-            int choice = InputHelper.getMenuChoice("Enter choice: ", 0, 9);
+            int choice = InputHelper.getMenuChoice(YELLOW + "  ▶ Choose: " + RESET, 0, 9);
             switch (choice) {
                 case 1 -> viewAllAdopters();
                 case 2 -> searchAdopterByName();
@@ -467,31 +478,21 @@ public class AdopterMenu {
                     """;
 
             System.out.println("\n=== BEFORE change (snapshot date: " + changeDate + ") ===");
-            double totalBefore = 0;
+            double totalBefore = sumAndPrint(conn, adopterId, changeDate, true);
             try (PreparedStatement ps = conn.prepareStatement(beforeSql)) {
                 ps.setInt(1, adopterId);
                 ps.setTimestamp(2, changeDate);
                 ResultSet rs = ps.executeQuery();
-                // Collect total before printing
-                totalBefore = sumAndPrint(conn, adopterId, changeDate, true);
-                // Re-run for TablePrinter
-                ps.setInt(1, adopterId);
-                ps.setTimestamp(2, changeDate);
-                ResultSet rs2 = ps.executeQuery();
-                TablePrinter.print(rs2);
+                TablePrinter.print(rs);
             }
 
             System.out.println("\n=== AFTER change (snapshot date: " + changeDate + ") ===");
-            double totalAfter = 0;
+            double totalAfter = sumAndPrint(conn, adopterId, changeDate, false);
             try (PreparedStatement ps = conn.prepareStatement(afterSql)) {
                 ps.setInt(1, adopterId);
                 ps.setTimestamp(2, changeDate);
                 ResultSet rs = ps.executeQuery();
-                totalAfter = sumAndPrint(conn, adopterId, changeDate, false);
-                ps.setInt(1, adopterId);
-                ps.setTimestamp(2, changeDate);
-                ResultSet rs2 = ps.executeQuery();
-                TablePrinter.print(rs2);
+                TablePrinter.print(rs);
             }
 
             // Summary

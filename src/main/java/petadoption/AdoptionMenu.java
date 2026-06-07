@@ -5,23 +5,34 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class AdoptionMenu {
+    private static final String RESET  = "\u001B[0m";
+    private static final String BOLD   = "\u001B[1m";
+    private static final String CYAN   = "\u001B[36m";
+    private static final String GREEN  = "\u001B[32m";
+    private static final String RED    = "\u001B[31m";
+    private static final String YELLOW = "\u001B[33m";
+    private static final String WHITE  = "\u001B[37m";
 
     // =========================================================
     // MAIN MENU
     // =========================================================
     public static void menu() {
         while (true) {
-            System.out.println("\n========== ADOPTION MENU ==========");
-            System.out.println(" 1. Browse available cats");
-            System.out.println(" 2. Create new adoption transaction");
-            System.out.println(" 3. View transaction details");
-            System.out.println(" 4. View all transactions");
-            System.out.println(" 5. View transactions by adopter");
-            System.out.println(" 6. View transactions by shelter");
-            System.out.println(" 0. Back to main menu");
-            System.out.println("====================================");
+            System.out.println();
+            System.out.println(CYAN + BOLD + "╔══════════════════════════════════════════════╗" + RESET);
+            System.out.println(CYAN + BOLD + "║              🐾 Adoption Menu                ║" + RESET);
+            System.out.println(CYAN + BOLD + "╚══════════════════════════════════════════════╝" + RESET);
+            System.out.println();
+            System.out.println("  " + CYAN + BOLD + "[1]" + RESET + WHITE + " Browse available cats"          + RESET);
+            System.out.println("  " + CYAN + BOLD + "[2]" + RESET + WHITE + " Create new adoption transaction" + RESET);
+            System.out.println("  " + CYAN + BOLD + "[3]" + RESET + WHITE + " View transaction details"        + RESET);
+            System.out.println("  " + CYAN + BOLD + "[4]" + RESET + WHITE + " View all transactions");
+            System.out.println("  " + CYAN + BOLD + "[5]" + RESET + WHITE + " View transactions by adopter");
+            System.out.println("  " + CYAN + BOLD + "[6]" + RESET + WHITE + " View transactions by shelter");
+            System.out.println("  " + RED  + BOLD + "[0]" + RESET + RED   + " Back to Main Menu" + RESET);
+            System.out.println();
 
-            int choice = InputHelper.getMenuChoice("Enter choice: ", 0, 6);
+            int choice = InputHelper.getMenuChoice(YELLOW + "  ▶ Choose: " + RESET, 0, 6);
             switch (choice) {
                 case 1 -> browseAvailableCats();
                 case 2 -> createAdoptionTransaction();
