@@ -9,6 +9,13 @@ import java.util.Scanner;
 import petadoption.TablePrinter;
 
 public class ReportMenu {
+    private static final String RESET  = "\u001B[0m";
+    private static final String BOLD   = "\u001B[1m";
+    private static final String CYAN   = "\u001B[36m";
+    private static final String GREEN  = "\u001B[32m";
+    private static final String RED    = "\u001B[31m";
+    private static final String YELLOW = "\u001B[33m";
+    private static final String WHITE  = "\u001B[37m";
     private final Connection conn;
     private final Scanner scanner;
 
@@ -20,15 +27,19 @@ public class ReportMenu {
     public void showMenu() {
         while (true) {
             System.out.println();
-            System.out.println("===== Report Menu =====");
-            System.out.println("1. Worker salary report by role");
-            System.out.println("2. Worker count and average salary by shelter city");
-            System.out.println("3. Adoption summary by shelter city");
-            System.out.println("4. Adoption fee change analysis by cat type");
-            System.out.println("5. Adopter demographic change sales analysis");
-            System.out.println("0. Back");
+            System.out.println(CYAN + BOLD + "╔══════════════════════════════════════════════╗" + RESET);
+            System.out.println(CYAN + BOLD + "║               📊 Report Menu                 ║" + RESET);
+            System.out.println(CYAN + BOLD + "╚══════════════════════════════════════════════╝" + RESET);
+            System.out.println();
+            System.out.println("  " + CYAN + BOLD + "[1]" + RESET + WHITE + " Worker salary report by role"              + RESET);
+            System.out.println("  " + CYAN + BOLD + "[2]" + RESET + WHITE + " Worker count and avg salary by city"       + RESET);
+            System.out.println("  " + CYAN + BOLD + "[3]" + RESET + WHITE + " Adoption summary by shelter city"          + RESET);
+            System.out.println("  " + CYAN + BOLD + "[4]" + RESET + WHITE + " Adoption fee change analysis by cat type"  + RESET);
+            System.out.println("  " + CYAN + BOLD + "[5]" + RESET + WHITE + " Adopter demographic change sales analysis" + RESET);
+            System.out.println("  " + RED  + BOLD + "[0]" + RESET + RED   + " Back"                                      + RESET);
+            System.out.println();
 
-            int choice = readInt("Choose menu: ");
+            int choice = readInt(YELLOW + "  ▶ Choose: " + RESET);
 
             switch (choice) {
                 case 1 -> workerSalaryReportByRole();
@@ -39,7 +50,7 @@ public class ReportMenu {
                 case 0 -> {
                     return;
                 }
-                default -> System.out.println("Invalid choice.");
+                default -> System.out.println(RED + "  ✘ Invalid choice." + RESET);
             }
         }
     }
