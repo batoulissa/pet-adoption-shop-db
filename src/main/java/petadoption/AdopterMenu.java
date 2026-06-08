@@ -1,6 +1,12 @@
 package petadoption;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.SQLIntegrityConstraintViolationException;
+import java.sql.Statement;
+import java.sql.Timestamp;
 
 public class AdopterMenu {
     private static final String RESET  = "\u001B[0m";
@@ -395,7 +401,7 @@ public class AdopterMenu {
     private static void compareSalesBeforeAfterChange() {
         int adopterId = InputHelper.getInt("Enter adopter ID to analyze: ");
 
-        System.out.println("\n--- REQ14: Sales Before vs After Demographic Change ---");
+        System.out.println("\n---  Sales Before vs After Demographic Change ---");
         System.out.println("This shows each adoption linked to the adopter's city/address");
         System.out.println("at the TIME of that adoption (not their current address).\n");
 
